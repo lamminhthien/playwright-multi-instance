@@ -1,13 +1,13 @@
 import { chromium } from 'playwright';
 
-const url = 'https://www.quizne.com/room/ymoyb/multiple-play';
+const url = 'https://www.quizne.com/room/oo7d6/multiple-play';
 
 async function sleep(ms: number) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 (async () => {
-  const numberOfInstances = 3; // Adjust the number of Chrome instances you want
+  const numberOfInstances = 100; // Adjust the number of Chrome instances you want
 
   const browserPromises = [];
 
@@ -20,7 +20,7 @@ async function sleep(ms: number) {
   for (const browser of browsers) {
     const page = await browser.newPage();
     await page.goto(url);
-    await page.getByPlaceholder('Type your name here').fill('a');
+    await page.getByPlaceholder('Type your name here').fill('a')
     await page.keyboard.down('Enter');
 
     // Perform actions for each browser instance
