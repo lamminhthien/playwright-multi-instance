@@ -13,7 +13,7 @@ function splitArray<T>(array: T[], childArraySize: number): T[][] {
 }
 
 (async () => {
-  const numberOfInstances = 80; // Adjust the number of Chrome instances you want
+  const numberOfInstances = 100; // Adjust the number of Chrome instances you want
   const numberUserJoinSameTime = 10; // Adjust the number of Chrome instances you want
 
   const instances = [...Array.from({length:numberOfInstances}).keys()].map((_,i)=>`ThienLam ${i+1}`)
@@ -28,13 +28,19 @@ function splitArray<T>(array: T[], childArraySize: number): T[][] {
     const groupBrowser = groupBrowsers[index];
     const promiseGroupBrowserJoinRoom = groupBrowser.map(async (browser,i)=>{
       const joinRoom = async ()=>{
-       const page = await browser.newPage();
-       await page.goto(url);
        const userName = instances[index*numberUserJoinSameTime+i]
+       try{
+        const page = await browser.newPage();
+       page.setDefaultTimeout(0)
+       await page.goto(url);
        await page.getByPlaceholder('Type your name here').fill(userName)
        await page.keyboard.down('Enter');
-       page.setDefaultTimeout(0)
        console.log(`User ${userName} joined`)
+       }
+       catch(error){
+       console.log(`User ${userName} error`)
+
+       }
       }
 
       return joinRoom()
