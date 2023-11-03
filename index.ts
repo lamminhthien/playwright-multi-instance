@@ -14,7 +14,7 @@ function splitArray<T>(array: T[], childArraySize: number): T[][] {
 
 (async () => {
   const numberOfInstances = 100; // Adjust the number of Chrome instances you want
-  const numberUserJoinSameTime = 10; // Adjust the number of Chrome instances you want
+  const numberUserJoinSameTime = 5; // Adjust the number of Chrome instances you want
 
   const instances = [...Array.from({length:numberOfInstances}).keys()].map((_,i)=>`ThienLam ${i+1}`)
   const browserPromises = instances.map((e,i)=>chromium.launch({ headless: true, timeout: 0 }));
@@ -22,7 +22,7 @@ function splitArray<T>(array: T[], childArraySize: number): T[][] {
   const browsers = await Promise.all(browserPromises);
   console.log("🚀 Load chrome success: ", browsers.length)
 
-  const groupBrowsers = splitArray(browsers, 10);
+  const groupBrowsers = splitArray(browsers, numberUserJoinSameTime);
 
   for (let index = 0; index < groupBrowsers.length; index++) {
     const groupBrowser = groupBrowsers[index];
