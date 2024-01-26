@@ -37,6 +37,9 @@ function splitArray<T>(array: T[], childArraySize: number): T[][] {
        await page.getByPlaceholder('Type your name here').fill(userName)
        await page.keyboard.down('Enter');
        console.log(`User ${userName} joined`)
+       setInterval(() => {
+        page.click(".multiple-choice-answer-button").catch();
+      }, 10000);
        }
        catch(error){
        console.log(`User ${userName} error`)
