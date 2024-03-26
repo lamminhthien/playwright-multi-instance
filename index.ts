@@ -1,5 +1,4 @@
 import { chromium } from 'playwright';
-import { faker } from '@faker-js/faker';
 
 const url = 'https://www.quizne.com/room/w0orw/multiple-play';
 function splitArray<T>(array: T[], childArraySize: number): T[][] {
@@ -16,7 +15,7 @@ function splitArray<T>(array: T[], childArraySize: number): T[][] {
 (async () => {
   const numberOfInstances = 30; // Adjust the number of Chrome instances you want
   const numberUserJoinSameTime = 5; // Adjust the number of Chrome instances you want
-  const name = faker.internet.userName();
+  const name = 'Thien Lam'
 
   const instances = [...Array.from({length:numberOfInstances}).keys()].map((_,i)=>`${name} ${i+1}`)
   const browserPromises = instances.map((e,i)=>chromium.launch({ headless: true, timeout: 0 }));
