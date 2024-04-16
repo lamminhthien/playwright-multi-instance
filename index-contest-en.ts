@@ -56,8 +56,11 @@ function splitArray<T>(array: T[], childArraySize: number): T[][] {
           await page.getByPlaceholder("Email or Phone").fill(fakePhoneNumber);
           await page.getByPlaceholder("Password", { exact: true }).fill(fakePhoneNumber);
           await page.getByPlaceholder("Confirm Password").fill(fakePhoneNumber);
-          // await page.getByRole("button", { name: "Sign Up", exact: true }).click();
-
+          await page.getByRole("button", { name: "Sign Up", exact: true }).click();
+          await page.waitForURL('**/explore')
+          // await page.setDefaultTimeout(50);
+          await page.goto(url);
+          await page.getByText('JOIN').click();
         }
       };
 
