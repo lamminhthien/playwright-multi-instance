@@ -1,7 +1,7 @@
-import { firefox } from "playwright";
+import { webkit } from "playwright";
 import { generateRandomNumberString } from "./utils/generate-vietnam-phone.util";
 
-const url = "https://www.quizne.vn/en-us/contest/cuoc-thi-test-bot-co-survey";
+const url = "https://www.quizne.vn/contest/hoa-test-cuoc-thipjxru";
 function splitArray<T>(array: T[], childArraySize: number): T[][] {
   const splittedArray: T[][] = [];
 
@@ -14,12 +14,12 @@ function splitArray<T>(array: T[], childArraySize: number): T[][] {
 }
 
 (async () => {
-  const numberOfInstances = 50; // Adjust the number of Chrome instances you want
+  const numberOfInstances = 100; // Adjust the number of Chrome instances you want
   const numberUserJoinSameTime = 5; // Adjust the number of Chrome instances you want
   const name = "Random User With Phone Number";
 
   const instances = [...Array.from({ length: numberOfInstances }).keys()].map((_, i) => `${name} ${i + 1}`);
-  const browserPromises = instances.map((e, i) => firefox.launch({ headless: true, timeout: 0 }));
+  const browserPromises = instances.map((e, i) => webkit.launch({ headless: true, timeout: 0 }));
 
   const browsers = await Promise.all(browserPromises);
   console.log("🚀 Load chrome success: ", browsers.length);
