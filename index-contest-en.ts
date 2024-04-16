@@ -55,7 +55,7 @@ function splitArray<T>(array: T[], childArraySize: number): T[][] {
 
           // Answer survey
           await page.getByPlaceholder("Type answer here").fill(fakerName).catch();
-          await page.getByRole("button", { name: "CONTINUE", exact: true }).click().catch();
+          await page.getByRole("button", { name: "Continue", exact: true }).click().catch();
 
           // Auto answer single choice or multiple choice or type the answer, and auto submit
           setInterval(() => {
