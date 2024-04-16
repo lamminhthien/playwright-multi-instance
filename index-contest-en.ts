@@ -14,7 +14,7 @@ function splitArray<T>(array: T[], childArraySize: number): T[][] {
 }
 
 (async () => {
-  const numberOfInstances = 5; // Adjust the number of Chrome instances you want
+  const numberOfInstances = 1; // Adjust the number of Chrome instances you want
   const numberUserJoinSameTime = 1; // Adjust the number of Chrome instances you want
   const name = "Random User With Phone Number";
 
@@ -30,21 +30,35 @@ function splitArray<T>(array: T[], childArraySize: number): T[][] {
     const groupBrowser = groupBrowsers[index];
     const promiseGroupBrowserGoToContestDetail = groupBrowser.map(async (browser, i) => {
       const goToContestDetail = async () => {
+        // Initial page instance
         const page = await browser.newPage();
         page.setDefaultTimeout(0);
+
+        // Fake data
         const fakePhoneNumber = generateRandomNumberString(10);
         const fakerName = `bot_${fakePhoneNumber}`;
+
         try {
+          // Sign Up
           await page.goto(url);
           await page.getByText("Sign Up").click();
           await page.getByPlaceholder("Full Name").fill(fakerName);
           await page.getByPlaceholder("Email or Phone").fill(fakePhoneNumber);
           await page.getByPlaceholder("Password", { exact: true }).fill(fakePhoneNumber);
           await page.getByPlaceholder("Confirm Password").fill(fakePhoneNumber);
+
           await page.getByRole("button", { name: "Sign Up", exact: true }).click();
           await page.waitForURL("**/explore");
           await page.goto(url);
+
           await page.getByText("JOIN").click();
+
+          // Auto answer single choice or multiple choice or type the answer, and auto submit
+          setInterval(async () => {
+            await page.click(".multiple-choice-answer-button").catch();
+            await page.getByPlaceholder('Type your answer here').fill("ABC").catch();
+            await page.getByRole("button", { name: "Submit", exact: true }).click().catch();
+          }, 10000);
         } catch (error) {
           console.log("🚀 ~ goToContestDetail ~ error:", error);
           console.log(`User ${fakerName} error`);
