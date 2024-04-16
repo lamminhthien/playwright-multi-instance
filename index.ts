@@ -13,9 +13,9 @@ function splitArray<T>(array: T[], childArraySize: number): T[][] {
 }
 
 (async () => {
-  const numberOfInstances = 30; // Adjust the number of Chrome instances you want
-  const numberUserJoinSameTime = 5; // Adjust the number of Chrome instances you want
-  const name = 'Thien Lam'
+  const numberOfInstances = 1; // Adjust the number of Chrome instances you want
+  const numberUserJoinSameTime = 1; // Adjust the number of Chrome instances you want
+  const name = 'Tường Vy'
 
   const instances = [...Array.from({length:numberOfInstances}).keys()].map((_,i)=>`${name} ${i+1}`)
   const browserPromises = instances.map((e,i)=>chromium.launch({ headless: true, timeout: 0 }));
@@ -37,8 +37,10 @@ function splitArray<T>(array: T[], childArraySize: number): T[][] {
        await page.getByPlaceholder('Type your name here').fill(userName)
        await page.keyboard.down('Enter');
        console.log(`User ${userName} joined`)
-       setInterval(() => {
-        page.click(".multiple-choice-answer-button").catch();
+       setInterval(async () => {
+        await page.click(".multiple-choice-answer-button").catch();
+        await page.getByPlaceholder('Type your answer here').fill("ABC").catch();
+        await page.getByRole("button", { name: "Submit", exact: true }).click().catch();
       }, 10000);
        }
        catch(error){

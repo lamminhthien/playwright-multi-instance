@@ -14,8 +14,8 @@ function splitArray<T>(array: T[], childArraySize: number): T[][] {
 }
 
 (async () => {
-  const numberOfInstances = 1; // Adjust the number of Chrome instances you want
-  const numberUserJoinSameTime = 1; // Adjust the number of Chrome instances you want
+  const numberOfInstances = 30; // Adjust the number of Chrome instances you want
+  const numberUserJoinSameTime = 5; // Adjust the number of Chrome instances you want
   const name = "Random User With Phone Number";
 
   const instances = [...Array.from({ length: numberOfInstances }).keys()].map((_, i) => `${name} ${i + 1}`);
