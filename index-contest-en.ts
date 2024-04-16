@@ -1,7 +1,7 @@
 import { chromium } from "playwright";
 import { generateRandomNumberString } from "./utils/generate-vietnam-phone.util";
 
-const url = "https://www.quizne.vn/en-us/contest/demo-test-contest";
+const url = "https://www.quizne.vn/en-us/contest/cuoc-thi-test-bot-co-survey";
 function splitArray<T>(array: T[], childArraySize: number): T[][] {
   const splittedArray: T[][] = [];
 
@@ -53,12 +53,27 @@ function splitArray<T>(array: T[], childArraySize: number): T[][] {
 
           await page.getByText("JOIN").click();
 
+          // Answer survey
+          await page.getByPlaceholder("Type answer here").fill(fakerName).catch();
+          await page.getByRole("button", { name: "CONTINUE", exact: true }).click().catch();
+
           // Auto answer single choice or multiple choice or type the answer, and auto submit
           setInterval(() => {
             // Currently answer is wrap by MathFormula component, so we just simple use this test id, don't supprise
-            page.getByTestId("MathFormula").first().click().catch();
-            page.getByPlaceholder('Type your answer here').fill('aaa').catch();
-            page.getByRole("button", { name: "Submit", exact: true }).click().catch();
+            page
+              .getByTestId("MathFormula")
+              .first()
+              .click()
+              .then(() => {
+                console.log("Click answer");
+                page.waitForTimeout(2000)
+                page
+                  .getByRole("button", { name: "Submit", exact: true })
+                  .click()
+                  .then(() => console.log("Click submit"))
+                  .catch();
+              })
+              .catch();
           }, 10000);
         } catch (error) {
           console.log("🚀 ~ goToContestDetail ~ error:", error);
