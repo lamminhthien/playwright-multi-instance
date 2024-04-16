@@ -14,8 +14,8 @@ function splitArray<T>(array: T[], childArraySize: number): T[][] {
 }
 
 (async () => {
-  const numberOfInstances = 30; // Adjust the number of Chrome instances you want
-  const numberUserJoinSameTime = 5; // Adjust the number of Chrome instances you want
+  const numberOfInstances = 1; // Adjust the number of Chrome instances you want
+  const numberUserJoinSameTime = 1; // Adjust the number of Chrome instances you want
   const name = "Random User With Phone Number";
 
   const instances = [...Array.from({ length: numberOfInstances }).keys()].map((_, i) => `${name} ${i + 1}`);
@@ -55,8 +55,9 @@ function splitArray<T>(array: T[], childArraySize: number): T[][] {
 
           // Auto answer single choice or multiple choice or type the answer, and auto submit
           setInterval(async () => {
-            await page.click(".multiple-choice-answer-button").catch();
-            await page.getByPlaceholder('Type your answer here').fill("ABC").catch();
+            // Currently answer is wrap by MathFormula component, so we just simple use this test id, don't supprise
+            await page.getByTestId("MathFormula").click().catch();
+            await page.getByPlaceholder('Type your answer here').fill('aaa').catch();
             await page.getByRole("button", { name: "Submit", exact: true }).click().catch();
           }, 10000);
         } catch (error) {
