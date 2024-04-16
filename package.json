@@ -4,11 +4,14 @@
   "description": "",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon index.ts"
+    "start": "nodemon index.ts",
+    "start-contest-en": "nodemon index-contest-en.ts",
+    "start-contest-vi": "nodemon index-contest-vi.ts"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@faker-js/faker": "^8.4.1",
     "@playwright/test": "^1.39.0",
     "faker": "^6.6.6",
     "nodemon": "^3.0.1",
