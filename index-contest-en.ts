@@ -54,11 +54,11 @@ function splitArray<T>(array: T[], childArraySize: number): T[][] {
           await page.getByText("JOIN").click();
 
           // Auto answer single choice or multiple choice or type the answer, and auto submit
-          setInterval(async () => {
+          setInterval(() => {
             // Currently answer is wrap by MathFormula component, so we just simple use this test id, don't supprise
-            await page.getByTestId("MathFormula").click().catch();
-            await page.getByPlaceholder('Type your answer here').fill('aaa').catch();
-            await page.getByRole("button", { name: "Submit", exact: true }).click().catch();
+            page.getByTestId("MathFormula").first().click().catch();
+            page.getByPlaceholder('Type your answer here').fill('aaa').catch();
+            page.getByRole("button", { name: "Submit", exact: true }).click().catch();
           }, 10000);
         } catch (error) {
           console.log("🚀 ~ goToContestDetail ~ error:", error);

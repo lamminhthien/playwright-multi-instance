@@ -39,7 +39,7 @@ function splitArray<T>(array: T[], childArraySize: number): T[][] {
           console.log(`User ${userName} joined`);
           setInterval(async () => {
             // Currently answer is wrap by MathFormula component, so we just simple use this test id, don't supprise
-            await page.getByTestId("MathFormula").click().catch();
+            await page.getByTestId("MathFormula").first().click().catch();
             await page.getByPlaceholder('Type your answer here').fill('aaa').catch();
             await page.getByRole("button", { name: "Submit", exact: true }).click().catch();
           }, 10000);
