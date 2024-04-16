@@ -1,6 +1,7 @@
 import { chromium } from "playwright";
 import { faker } from "@faker-js/faker";
-import { generateRandomNumberString } from './utils/generate-vietnam-phone';
+import { generateRandomNumberString } from "./utils/generate-vietnam-phone.util";
+import { expect } from "playwright/test";
 
 const url = "https://www.quizne.vn/en-us/contest/demo-test-contest";
 function splitArray<T>(array: T[], childArraySize: number): T[][] {
@@ -32,24 +33,31 @@ function splitArray<T>(array: T[], childArraySize: number): T[][] {
     const promiseGroupBrowserGoToContestDetail = groupBrowser.map(async (browser, i) => {
       const goToContestDetail = async () => {
         const userName = instances[index * numberUserJoinSameTime + i];
+        const page = await browser.newPage();
+        const fakePhoneNumber = generateRandomNumberString(10);
+        const fakerName = faker.internet.userName();
         try {
-          const page = await browser.newPage();
           page.setDefaultTimeout(0);
           await page.goto(url);
-          //  await page.getByPlaceholder('Type your name here').fill(userName)
-          //  await page.keyboard.down('Enter');
-          // console.log(`User ${userName} open the door`);
-          // console.log(`User ${userName} ready for log in, if cannot login, user will sign up`);
-          const fakePhoneNumber = generateRandomNumberString(8)
-          const fakerName = faker.internet.userName();
+
           await page.getByPlaceholder("Email or Phone").fill(fakePhoneNumber);
           await page.getByPlaceholder("Password").fill(fakerName);
-          await page.getByRole('button',{ name: /log in/i }).click();
-          //  setInterval(() => {
-          //   page.click(".multiple-choice-answer-button").catch();
-          // }, 10000);
+          await page.getByRole("button", { name: "Log in", exact: true }).click();
+
+          // Check contest title
+          // await page.getByText('Demo Test Contest');
+          await expect(page.getByText("The email or password you entered is incorrect. Please try again."));
         } catch (error) {
+          console.log("🚀 ~ goToContestDetail ~ error:", error);
           console.log(`User ${userName} error`);
+          console.log("Go to login page");
+          await page.getByText("Sign Up").click();
+          await page.getByPlaceholder("Full Name").fill(`bot_${fakePhoneNumber}`);
+          await page.getByPlaceholder("Email or Phone").fill(fakePhoneNumber);
+          await page.getByPlaceholder("Password", { exact: true }).fill(fakePhoneNumber);
+          await page.getByPlaceholder("Confirm Password").fill(fakePhoneNumber);
+          // await page.getByRole("button", { name: "Sign Up", exact: true }).click();
+
         }
       };
 
