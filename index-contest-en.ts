@@ -14,12 +14,12 @@ function splitArray<T>(array: T[], childArraySize: number): T[][] {
 }
 
 (async () => {
-  const numberOfInstances = 100; // Adjust the number of Chrome instances you want
+  const numberOfInstances = 10; // Adjust the number of Chrome instances you want
   const numberUserJoinSameTime = 5; // Adjust the number of Chrome instances you want
   const name = "Random User With Phone Number";
 
   const instances = [...Array.from({ length: numberOfInstances }).keys()].map((_, i) => `${name} ${i + 1}`);
-  const browserPromises = instances.map((e, i) => webkit.launch({ headless: true, timeout: 0 }));
+  const browserPromises = instances.map((e, i) => webkit.launch({ headless: false, timeout: 0 }));
 
   const browsers = await Promise.all(browserPromises);
   console.log("🚀 Load chrome success: ", browsers.length);
