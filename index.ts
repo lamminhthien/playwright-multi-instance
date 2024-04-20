@@ -1,6 +1,6 @@
 import { chromium } from "playwright";
 
-const url = "https://www.quizne.com/room/w0orw/multiple-play";
+const url = "http://localhost:3000/en-us/contest/cac-quoc-gia-tren-tg-djuoc-menh-danh-la-xu-so-gi-random";
 function splitArray<T>(array: T[], childArraySize: number): T[][] {
   const splittedArray: T[][] = [];
 
@@ -13,7 +13,7 @@ function splitArray<T>(array: T[], childArraySize: number): T[][] {
 }
 
 (async () => {
-  const numberOfInstances = 1; // Adjust the number of Chrome instances you want
+  const numberOfInstances = 50; // Adjust the number of Chrome instances you want
   const numberUserJoinSameTime = 1; // Adjust the number of Chrome instances you want
   const name = "Tường Vy";
 

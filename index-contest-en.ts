@@ -1,7 +1,7 @@
 import { webkit } from "playwright";
 import { generateRandomNumberString } from "./utils/generate-vietnam-phone.util";
 
-const url = "https://www.quizne.vn/contest/hoa-test-cuoc-thipjxru";
+const url = "http://localhost:3000/en-us/contest/cac-quoc-gia-tren-tg-djuoc-menh-danh-la-xu-so-gi-random";
 function splitArray<T>(array: T[], childArraySize: number): T[][] {
   const splittedArray: T[][] = [];
 
@@ -14,7 +14,7 @@ function splitArray<T>(array: T[], childArraySize: number): T[][] {
 }
 
 (async () => {
-  const numberOfInstances = 10; // Adjust the number of Chrome instances you want
+  const numberOfInstances = 30; // Adjust the number of Chrome instances you want
   const numberUserJoinSameTime = 5; // Adjust the number of Chrome instances you want
   const name = "Random User With Phone Number";
 
@@ -37,6 +37,7 @@ function splitArray<T>(array: T[], childArraySize: number): T[][] {
         // Fake data
         const fakePhoneNumber = generateRandomNumberString(10);
         const fakerName = `bot_${fakePhoneNumber}`;
+        // const fake
 
         try {
           // Sign Up
@@ -55,7 +56,8 @@ function splitArray<T>(array: T[], childArraySize: number): T[][] {
 
           // Answer survey
           await page.getByPlaceholder("Type answer here").fill(fakerName).catch();
-          await page.getByRole("button", { name: "Continue", exact: true }).click().catch();
+          // await page.getByRole("button", { name: "Continue", exact: true }).click().catch();
+          await page.getByRole("button", { name: "Create Room", exact: true }).click().catch();
 
           // Auto answer single choice or multiple choice or type the answer, and auto submit
           setInterval(() => {
